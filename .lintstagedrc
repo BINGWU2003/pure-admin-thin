@@ -7,14 +7,7 @@
     "prettier --cache --write--parser json"
   ],
   "package.json": ["prettier --cache --write"],
-  "*.vue": [
-    "prettier --write",
-    "eslint --cache --fix",
-    "stylelint --fix --allow-empty-input"
-  ],
-  "*.{css,scss,html}": [
-    "prettier --cache --ignore-unknown --write",
-    "stylelint --fix --allow-empty-input"
-  ],
+  "*.vue": ["prettier --write", "eslint --cache --fix"],
+  "*.{css,scss,html}": ["prettier --cache --ignore-unknown --write"],
   "*.md": ["prettier --cache --ignore-unknown --write"]
 }
