@@ -42,12 +42,28 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       sourcemap: false,
       // 消除打包大小超过500kb警告
       chunkSizeWarningLimit: 4000,
-      rollupOptions: {
+      rolldownOptions: {
         input: {
           index: pathResolve("./index.html", import.meta.url)
         },
-        // 静态资源分类打包
         output: {
+          // https://rolldown.rs/reference/OutputOptions.codeSplitting
+          // 框架和 UI 依赖单独分包，业务页面继续自动按需分包
+          codeSplitting: {
+            groups: [
+              {
+                name: "vendor-vue",
+                test: /[\\/]node_modules[\\/](?:@vue[\\/]|vue[\\/]|vue-router[\\/]|pinia[\\/])/,
+                priority: 20
+              },
+              {
+                name: "vendor-element-plus",
+                test: /[\\/]node_modules[\\/](?:element-plus[\\/]|@element-plus[\\/])/,
+                priority: 10
+              }
+            ]
+          },
+          // 静态资源分类命名
           chunkFileNames: "static/js/[name]-[hash].js",
           entryFileNames: "static/js/[name]-[hash].js",
           assetFileNames: "static/[ext]/[name]-[hash].[ext]"
